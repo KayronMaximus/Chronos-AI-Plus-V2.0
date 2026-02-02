@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#121212">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chronos Assistant</title>
+    <script src="https://accounts.google.com/gsi/client" async defer></script>
+    <script src="https://apis.google.com/js/api.js" async defer></script>
+    <link rel="stylesheet" href="./css/style.css">
+    <link rel="icon" type="image/png" href="https://cdn-icons-png.flaticon.com/512/4712/4712009.png">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+
+<body>
+    <div class="app-container">
+        <header class="header-principal" style="display: flex; justify-content: space-between; align-items: start;">
+            <div>
+                <h1 id="saudacao-texto">Carregando...</h1>
+                <p class="data-layer">
+                    <span id="data-atual-home">Carregando data...</span>
+                    <span style="margin: 0 8px; opacity: 0.5;">|</span>
+                    <span id="relogio-home" style="color: var(--primary-color); font-weight: bold;">00:00:00</span>
+                </p>
+            </div>
+            <button onclick="mostrarSecao('config')"
+                style="background:none; border:none; cursor:pointer; font-size: 1.2rem; filter: drop-shadow(0 0 5px var(--primary-color));">⚙️</button>
+        </header>
+
+        <main>
+            <section id="view-home" class="view">
+                <div class="card saldo-card">
+                    <p style="color: #888; font-size: 0.9rem;">Balanço Total</p>
+                    <h1 id="resumo-saldo-home">R$ 0,00</h1>
+                    <div style="height: 100px; margin-top: 15px;">
+                        <canvas id="grafico-resumo-home"></canvas>
+                    </div>
+                    <div id="streak-container"
+                        style="margin-top: 15px; font-weight: bold; color: #ff9f43; display: flex; align-items: center; gap: 8px;">
+                        <span style="font-size: 1.2rem;">🔥</span> Sequência: <span id="streak-count">0</span> dias
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div
+                        style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+                        <h3>🎯 Foco de Hoje</h3>
+                        <span id="contagem-tarefas" class="badge">0</span>
+                    </div>
+                    <div id="lista-resumo-home"></div>
+                    <button class="link-btn" onclick="mostrarSecao('agenda')">Ver Agenda Completa →</button>
+                </div>
+            </section>
+
+            <section id="view-agenda" class="view hidden">
+                <h2>Sua Agenda</h2>
+                <div class="card dashboard-card">
+                    <div style="width: 110px; height: 110px;">
+                        <canvas id="grafico-tarefas"></canvas>
+                    </div>
+                    <div style="text-align: right;">
+                        <h3 id="texto-progresso" style="font-size: 2rem; color: #00d4ff;">0%</h3>
+                        <p style="color: #888; font-size: 0.8rem;">Concluído</p>
+                    </div>
+                </div>
+                <button class="action-btn" onclick="abrirModal()">+ Nova Tarefa</button>
+                <div id="lista-tarefas" style="margin-top: 20px;"></div>
+            </section>
+
+            <section id="view-carteira" class="view hidden">
+                <h2>Finanças</h2>
+                <div class="card" style="text-align: center;">
+                    <p>Saldo em conta</p>
+                    <h1 id="saldo-carteira" style="font-size: 2.5rem;">R$ 0,00</h1>
+                </div>
+                <div class="card" style="height: 180px;">
+                    <canvas id="grafico-financas"></canvas>
+                </div>
+                <div class="card" style="height: 280px; padding: 20px;">
+                    <h3 style="font-size: 0.9rem; color: #888; margin-bottom: 5px;">Gastos por Categoria</h3>
+                    <div style="width: 100%; height: 100%; position: relative;">
+                        <canvas id="grafico-pizza-financas"></canvas>
+                    </div>
+                </div>
+                <div class="card">
+                    <button class="action-btn" onclick="abrirModalFinanceiro()">+ Nova Transação</button>
+                    <button onclick="analisarFinancas()" class="ai-btn">✨ Consultar Oráculo</button>
+                    <div id="resposta-ia" class="card hidden ia-box">
+                        <h3 style="color: #00d4ff;">Conselho do Oráculo:</h3>
+                        <p id="texto-ia">Pensando...</p>
+                    </div>
+                </div>
+                <div class="historico-container">
+                    <h3>Histórico Recente</h3>
+                    <div id="lista-transacoes"></div>
+                </div>
+            </section>
+
+            <section id="view-config" class="view hidden">
+                <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 20px;">
+                    <button onclick="mostrarSecao('home')"
+                        style="background:none; border:none; color:var(--primary-color); font-size: 1.2rem; cursor:pointer;">←</button>
+                    <h2>Configurações</h2>
+                </div>
+                <div class="card">
+                    <h3>👤 Identidade</h3>
+                    <p style="color: #888; font-size: 0.75rem; margin-bottom: 10px;">Como o Zeus deve te chamar?</p>
+                    <input type="text" id="config-nome-input" class="input-dark" placeholder="Novo nome...">
+                    <button class="action-btn" onclick="salvarNovoNome()">Salvar Nome</button>
+                </div>
+                <div class="card">
+                    <h3>🔐 Segurança (Oráculo)</h3>
+                    <p style="color: #888; font-size: 0.75rem; margin-bottom: 10px;">Insira sua API Key do Gemini.</p>
+                    <input type="password" id="config-api-key" class="input-dark" placeholder="Cole sua chave AIza...">
+                    <button class="action-btn" onclick="salvarApiKey()">Configurar Chave</button>
+                </div>
+                <div class="card">
+                    <h3>📅 Integração com Agenda</h3>
+                    <p style="color: #888; font-size: 0.75rem; margin-bottom: 15px;">Conecte sua conta para sincronizar
+                        missões.</p>
+                    <button class="action-btn" onclick="iniciarConexaoGoogle()" style="background: #4285F4;">Conectar
+                        Google Calendar</button>
+                </div>
+            </section>
+        </main>
+
+        <nav class="bottom-nav">
+            <button class="nav-btn" onclick="mostrarSecao('agenda')">
+                <svg class="nav-icon" viewBox="0 0 24 24">
+                    <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+                    <line x1="16" y1="2" x2="16" y2="6"></line>
+                    <line x1="8" y1="2" x2="8" y2="6"></line>
+                    <line x1="3" y1="10" x2="21" y2="10"></line>
+                </svg>
+                <span>Agenda</span>
+            </button>
+            <button class="nav-btn home-btn" onclick="mostrarSecao('home')">
+                <div class="neon-reactor">
+                    <div class="core"></div>
+                </div>
+            </button>
+            <button class="nav-btn" onclick="mostrarSecao('carteira')">
+                <svg class="nav-icon" viewBox="0 0 24 24">
+                    <path d="M20 7h-5a4 4 0 1 0 0 8h5"></path>
+                    <path d="M4 17h16a2 2 0 0 0 2-2v-10a2 2 0 0 0 -2 -2h-16a2 2 0 0 0 -2 2v10a2 2 0 0 0 2 2z"></path>
+                    <circle cx="16" cy="11" r="1" fill="currentColor"></circle>
+                </svg>
+                <span>Carteira</span>
+            </button>
+        </nav>
+    </div>
+
+    <div id="modal-tarefa" class="modal hidden">
+        <div class="modal-content">
+            <h3>Nova Missão</h3>
+            <label>O que precisa ser feito?</label>
+            <input type="text" id="input-titulo" placeholder="Ex: Estudar SQL">
+            <label>Categoria</label>
+            <select id="input-categoria">
+                <option value="Estudo">📚 Estudo</option>
+                <option value="Trabalho">💼 Trabalho</option>
+                <option value="Pessoal">⚡ Pessoal</option>
+            </select>
+            <div class="modal-buttons">
+                <button onclick="fecharModal()" class="btn-cancelar">Cancelar</button>
+                <button onclick="salvarTarefa()" class="btn-confirmar">Salvar</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="modal-transacao" class="modal hidden">
+        <div class="modal-content">
+            <h3>Nova Movimentação</h3>
+            <label>Descrição</label>
+            <input type="text" id="input-desc-transacao" placeholder="Ex: Salário, Lanche...">
+            <label>Valor (R$)</label>
+            <input type="number" id="input-valor-transacao" placeholder="0.00" step="0.01">
+            <label>Tipo</label>
+            <select id="input-tipo-transacao">
+                <option value="entrada">📈 Entrada (Receita)</option>
+                <option value="saida">📉 Saída (Despesa)</option>
+            </select>
+            <label>Categoria do Gasto</label>
+            <select id="input-categoria-transacao">
+                <option value="Alimentação">🍕 Alimentação</option>
+                <option value="Transporte">🚗 Transporte</option>
+                <option value="Lazer">🎮 Lazer</option>
+                <option value="Educação">📚 Educação</option>
+                <option value="Saúde">🏥 Saúde</option>
+                <option value="Outros">⚙️ Outros</option>
+            </select>
+            <div class="modal-buttons">
+                <button onclick="fecharModalFinanceiro()" class="btn-cancelar">Cancelar</button>
+                <button onclick="salvarTransacao()" class="btn-confirmar-fin">Confirmar</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="modal-agendamento" class="modal hidden">
+        <div class="modal-content modal-tatica">
+            <h3>📅 Agendar Missão</h3>
+            <p id="titulo-agendamento">...</p>
+            <label>Data e Hora de Início</label>
+            <input type="datetime-local" id="input-data-hora" class="input-dark">
+            <div class="modal-buttons">
+                <button onclick="fecharModalAgendamento()" class="btn-cancelar">Cancelar</button>
+                <button onclick="confirmarAgendamento()" class="btn-confirmar-agenda">Confirmar</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="./js/script.js"></script>
+</body>
+
+</html>
