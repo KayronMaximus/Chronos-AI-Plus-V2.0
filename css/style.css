@@ -563,3 +563,250 @@ canvas {
     background: rgba(66, 133, 244, 0.4);
     transform: scale(0.95);
 }
+/* =======================================================
+   ESTILO DO SPLASH SCREEN (TÉCNICA SANDUÍCHE 3D)
+   ======================================================= */
+#splash-screen {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100vw; height: 100vh;
+    background-color: #050505;
+    z-index: 9999; /* Acima de tudo */
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    overflow: hidden;
+    transition: opacity 1.5s ease-out, visibility 1.5s;
+}
+
+/* Fundo Estrelado Simples */
+.space-background {
+    position: absolute;
+    width: 100%; height: 100%;
+    background: radial-gradient(white 1px, transparent 1px);
+    background-size: 40px 40px;
+    opacity: 0.1;
+    animation: moveSpace 60s linear infinite;
+}
+
+/* O Container que segura o Buraco Negro */
+.black-hole-box {
+    position: relative;
+    width: 300px; height: 300px;
+    display: flex; justify-content: center; align-items: center;
+    transform: scale(1.2); /* Tamanho geral */
+}
+
+/* --- CAMADA 2: A ESFERA PRETA (MEIO) --- */
+.event-horizon {
+    position: relative;
+    width: 80px; height: 80px;
+    background: #000000;
+    border-radius: 50%;
+    z-index: 10; /* Fica ENTRE os discos */
+    box-shadow: 0 0 40px rgba(0, 0, 0, 1); /* Sombra intensa */
+}
+
+/* O anel de luz fina na borda da esfera */
+.photon-ring {
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    width: 105%; height: 105%;
+    border-radius: 50%;
+    border: 1px solid rgba(255, 255, 255, 0.8);
+    box-shadow: 0 0 10px #9939ff;
+    filter: blur(1px);
+}
+
+/* --- CONFIGURAÇÃO GERAL DOS DISCOS --- */
+/* =========================================
+   SPLASH SCREEN: VÓRTICE DE PARTÍCULAS
+   ========================================= */
+#splash-screen {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100vw; height: 100vh;
+    background: #020202; /* Quase preto absoluto */
+    display: flex; flex-direction: column;
+    justify-content: center; align-items: center;
+    z-index: 9999;
+    overflow: hidden;
+    transition: opacity 1s ease, visibility 1s;
+}
+
+/* Fundo com leve pulsação */
+.deep-space-bg {
+    position: absolute;
+    width: 100%; height: 100%;
+    background: radial-gradient(circle at center, #0a0a1a 0%, #000 70%);
+    opacity: 0.8;
+}
+
+.particle-system {
+    position: relative;
+    width: 300px; height: 300px;
+    display: flex; justify-content: center; align-items: center;
+    /* Inclinação leve para dar profundidade 3D */
+    transform: perspective(500px) rotateX(60deg);
+    transform-style: preserve-3d;
+}
+
+/* --- O NÚCLEO (O Vazio) --- */
+.core-void {
+    position: absolute;
+    width: 60px; height: 60px;
+    background: #000;
+    border-radius: 50%;
+    z-index: 10;
+    box-shadow: 0 0 50px rgba(0, 212, 255, 0.3); /* Brilho interno fraco */
+    animation: pulseCore 2s infinite ease-in-out;
+}
+
+/* --- PARTÍCULAS (ANÉIS PONTILHADOS) --- */
+.particle-ring {
+    position: absolute;
+    border-radius: 50%;
+    border-style: dotted; /* ISSO CRIA AS PARTÍCULAS */
+    box-shadow: 0 0 10px rgba(0, 212, 255, 0.2);
+    opacity: 0.7;
+}
+
+/* Camada 1: Partículas Finas Ciano (Rápido) */
+.layer-1 {
+    width: 100px; height: 100px;
+    border-width: 2px;
+    border-color: #00d4ff;
+    animation: spinParticles 2s linear infinite;
+}
+
+/* Camada 2: Partículas Roxas (Médio) */
+.layer-2 {
+    width: 160px; height: 160px;
+    border-width: 3px;
+    border-color: #8a2be2; /* Roxo */
+    border-left-color: transparent; /* Cria falhas no anel */
+    border-right-color: transparent;
+    animation: spinParticles 3s linear infinite reverse; /* Gira ao contrário */
+}
+
+/* Camada 3: Partículas Brancas Esparsas (Lento) */
+.layer-3 {
+    width: 220px; height: 220px;
+    border-width: 2px;
+    border-color: rgba(255,255,255,0.5);
+    border-top-color: transparent;
+    border-bottom-color: transparent;
+    animation: spinParticles 5s linear infinite;
+}
+
+/* Camada 4: A Nuvem Externa (Orbitais) */
+.layer-4 {
+    width: 280px; height: 280px;
+    border: 1px dashed rgba(0, 212, 255, 0.2);
+    animation: spinParticles 10s linear infinite;
+}
+
+/* --- UI --- */
+.ui-container {
+    margin-top: 50px; /* Compensa a rotação 3D */
+    z-index: 20;
+    text-align: center;
+}
+
+.system-title {
+    font-family: 'Courier New', monospace;
+    font-size: 2rem;
+    color: #fff;
+    letter-spacing: 5px;
+    text-shadow: 0 0 15px #00d4ff;
+}
+
+.blink { animation: blink 0.5s infinite; color: #00d4ff; }
+.loading-text { font-family: sans-serif; font-size: 0.7rem; color: #555; letter-spacing: 3px; margin-top: 10px; }
+
+/* --- ANIMAÇÕES --- */
+@keyframes spinParticles {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+@keyframes pulseCore {
+    0%, 100% { transform: scale(1); box-shadow: 0 0 50px rgba(0, 212, 255, 0.3); }
+    50% { transform: scale(0.95); box-shadow: 0 0 80px rgba(138, 43, 226, 0.5); }
+}
+
+@keyframes jetPulse {
+    0% { opacity: 0.6; height: 190px; }
+    100% { opacity: 1; height: 210px; }
+}
+
+@keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
+
+/* CLASSE PARA SUMIR */
+.hide-splash {
+    opacity: 0; visibility: hidden; pointer-events: none;
+}
+
+/* --- UI E TEXTOS --- */
+.splash-ui {
+    margin-top: 80px;
+    text-align: center;
+    z-index: 30;
+    position: relative;
+}
+
+.splash-title {
+    font-family: 'Segoe UI', sans-serif;
+    font-size: 2rem;
+    color: #fff;
+    letter-spacing: 4px;
+    text-shadow: 0 0 10px #00d4ff;
+}
+
+.splash-title .highlight {
+    color: #00d4ff;
+    font-weight: 300;
+}
+
+.loading-line {
+    width: 150px; height: 2px;
+    background: rgba(255,255,255,0.1);
+    margin: 15px auto;
+    position: relative; overflow: hidden;
+}
+
+.loading-line::after {
+    content: '';
+    position: absolute; top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: #00d4ff;
+    transform: translateX(-100%);
+    animation: loadLine 2.5s infinite ease-in-out;
+}
+
+.splash-status {
+    font-family: monospace;
+    font-size: 0.8rem;
+    color: #666;
+    animation: blink 1.5s infinite;
+}
+
+/* --- ANIMAÇÕES --- */
+@keyframes spinHole {
+    0% { transform: rotateX(75deg) rotate(0deg); }
+    100% { transform: rotateX(75deg) rotate(360deg); }
+}
+@keyframes loadLine {
+    0% { transform: translateX(-100%); }
+    50% { transform: translateX(100%); }
+    100% { transform: translateX(100%); }
+}
+@keyframes blink { 50% { opacity: 0.5; } }
+@keyframes moveSpace { from { background-position: 0 0; } to { background-position: 500px 500px; } }
+
+/* CLASSE PARA SUMIR */
+.hide-splash {
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none; /* Garante que dá pra clicar no site depois */
+}
