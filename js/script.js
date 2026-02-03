@@ -394,24 +394,25 @@ function atualizarDashboard() {
   });
   const ctx = document.getElementById("grafico-resumo-home");
   if (chartHome) chartHome.destroy();
-  
-  if (ctx){chartHome = new Chart(ctx, {
-    type: "bar",
-    data: {
-      labels: [""],
-      datasets: [
-        { label: "In", data: [ent], backgroundColor: "#00d4ff" },
-        { label: "Out", data: [sai], backgroundColor: "#ff5555" },
-      ],
-    },
-    options: {
-      indexAxis: "y",
-      plugins: { legend: { display: false } },
-      scales: { x: { display: false }, y: { display: false } },
-      maintainAspectRatio: false,
-    },
-  });
-}
+
+  if (ctx) {
+    chartHome = new Chart(ctx, {
+      type: "bar",
+      data: {
+        labels: [""],
+        datasets: [
+          { label: "In", data: [ent], backgroundColor: "#00d4ff" },
+          { label: "Out", data: [sai], backgroundColor: "#ff5555" },
+        ],
+      },
+      options: {
+        indexAxis: "y",
+        plugins: { legend: { display: false } },
+        scales: { x: { display: false }, y: { display: false } },
+        maintainAspectRatio: false,
+      },
+    });
+  }
 }
 
 function verificarStreak() {
@@ -609,6 +610,31 @@ function verificarNotificacoes() {
   }
 }
 setTimeout(verificarNotificacoes, 10000);
+//NOVO 12:35
+const ZeusMensageiro = {
+  // Pede permissão ao utilizador (Chronos)
+  solicitarAcesso: async () => {
+    const permission = await Notification.requestPermission();
+    if (permission === "granted") {
+      console.log("Acesso ao Olimpo concedido!");
+    }
+  },
+
+  // Envia a ordem para o Service Worker disparar o Push
+  notificar: (titulo, corpo) => {
+    if (navigator.serviceWorker.controller) {
+      navigator.serviceWorker.controller.postMessage({
+        type: "NOTIFICAR_AGORA",
+        titulo: `🛡️ ${titulo}`,
+        corpo: corpo,
+      });
+    } else {
+      // Caso o SW ainda não esteja ativo, usa a notificação normal
+      new Notification(titulo, { body: corpo });
+    }
+  },
+};
+//NOVO 12:35
 
 // ============================================================================
 // 10. SISTEMA RPG (SOLO LEVELING LOGIC)
@@ -724,6 +750,7 @@ function subirDeNivel() {
     setTimeout(() => modal.classList.remove("level-up-anim"), 1000);
   }
   alert(`⚡ LEVEL UP! VOCÊ ALCANÇOU O NÍVEL ${estadoQuest.level} ⚡`);
+  ZeusMensageiro.notificar("LEVEL UP!", `Parabéns Chronos, alcançaste o nível ${estadoQuest.level}!`);
 }
 
 function atualizarHUDLevel() {
