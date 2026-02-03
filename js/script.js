@@ -83,22 +83,22 @@ function mostrarSecao(nomeSecao) {
   if (telaAlvo) {
     telaAlvo.classList.remove("hidden");
     setTimeout(() => {
-    if (nomeSecao === "agenda") atualizarGraficoTarefas();
-    if (nomeSecao === "carteira") {
-      renderizarFinancas();
-      atualizarGraficoFinancas();
-      atualizarGraficoPizza();
-    }
-    if (nomeSecao === "home") atualizarDashboard();
-  },50);
-  document.querySelectorAll(".nav-btn").forEach((btn) => {
-    btn.classList.remove("active");
-    const acaoBotao = btn.getAttribute("onclick");
-    if (acaoBotao && acaoBotao.includes(`'${nomeSecao}'`)) {
-      btn.classList.add("active");
-    }
-  });
-}
+      if (nomeSecao === "agenda") atualizarGraficoTarefas();
+      if (nomeSecao === "carteira") {
+        renderizarFinancas();
+        atualizarGraficoFinancas();
+        atualizarGraficoPizza();
+      }
+      if (nomeSecao === "home") atualizarDashboard();
+    }, 100);
+    document.querySelectorAll(".nav-btn").forEach((btn) => {
+      btn.classList.remove("active");
+      const acaoBotao = btn.getAttribute("onclick");
+      if (acaoBotao && acaoBotao.includes(`'${nomeSecao}'`)) {
+        btn.classList.add("active");
+      }
+    });
+  }
 }
 
 function irParaAgenda() {
@@ -139,6 +139,7 @@ function alternarStatusTarefa(id) {
   renderizarTarefas();
   atualizarDashboard();
   verificarStreak();
+  atualizarGraficoTarefas();
 }
 
 function deletarTarefa(id) {
@@ -393,7 +394,8 @@ function atualizarDashboard() {
   });
   const ctx = document.getElementById("grafico-resumo-home");
   if (chartHome) chartHome.destroy();
-  chartHome = new Chart(ctx, {
+  
+  if (ctx){chartHome = new Chart(ctx, {
     type: "bar",
     data: {
       labels: [""],
@@ -409,6 +411,7 @@ function atualizarDashboard() {
       maintainAspectRatio: false,
     },
   });
+}
 }
 
 function verificarStreak() {
@@ -779,16 +782,23 @@ function fecharSistema() {
 
 function atualizarGraficoTarefas() {
   const ctx = document.getElementById("grafico-tarefas");
+  const textoProgresso = document.getElementById("texto-progresso");
+
   if (!ctx) return;
+
   const feitas = tarefas.filter((t) => t.feita).length;
-  const total = tarefas.length || 1;
+  const total = tarefas.length;
+  const porcentagem = total > 0 ? Math.round((feitas / total) * 100) : 0;
+  if (textoProgresso) {
+    textoProgresso.innerText = porcentagem + "%";
+  }
   if (chartTarefas) chartTarefas.destroy();
   chartTarefas = new Chart(ctx, {
     type: "doughnut",
     data: {
       datasets: [
         {
-          data: [feitas, Math.max(0, total - feitas)],
+          data: [feitas, total > 0 ? total - feitas : 1],
           backgroundColor: ["#00d4ff", "#1a1a1a"],
           borderWidth: 0,
         },
