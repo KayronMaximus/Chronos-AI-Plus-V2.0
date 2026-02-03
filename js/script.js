@@ -48,6 +48,24 @@ document.addEventListener("DOMContentLoaded", () => {
   carregarSistema();
 
   mostrarSecao("home");
+  async function configurarVigiliaZeus() {
+    const registration = await navigator.serviceWorker.ready;
+
+    try {
+      // Tenta registar uma sincronização periódica (Funciona melhor em Android/PWA)
+      if ("periodicSync" in registration) {
+        await registration.periodicSync.register("verificar-missoes", {
+          minInterval: 24 * 60 * 60 * 1000, // Tenta verificar a cada 24h (mínimo do sistema)
+        });
+        console.log("Vigília de Zeus ativa em segundo plano.");
+      }
+    } catch (error) {
+      console.log("A vigília periódica requer que o app seja instalado (PWA).");
+    }
+  }
+
+  // Chama a função
+  configurarVigiliaZeus();
 
   // Service Worker
   if ("serviceWorker" in navigator) {
@@ -750,7 +768,10 @@ function subirDeNivel() {
     setTimeout(() => modal.classList.remove("level-up-anim"), 1000);
   }
   alert(`⚡ LEVEL UP! VOCÊ ALCANÇOU O NÍVEL ${estadoQuest.level} ⚡`);
-  ZeusMensageiro.notificar("LEVEL UP!", `Parabéns Chronos, alcançaste o nível ${estadoQuest.level}!`);
+  ZeusMensageiro.notificar(
+    "LEVEL UP!",
+    `Parabéns Chronos, alcançaste o nível ${estadoQuest.level}!`,
+  );
 }
 
 function atualizarHUDLevel() {

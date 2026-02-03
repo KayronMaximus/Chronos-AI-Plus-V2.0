@@ -45,6 +45,26 @@ self.addEventListener("notificationclick", (event) => {
       }),
   );
 });
+self.addEventListener("periodicsync", (event) => {
+  if (event.tag === "verificar-missoes") {
+    event.waitUntil(verificarTarefasPendentes());
+  }
+});
+
+async function verificarTarefasPendentes() {
+  // O Service Worker não tem acesso direto ao localStorage
+  // Mas ele pode comunicar com o app ou usar IndexedDB no futuro.
+  // Por agora, vamos simular um lembrete de disciplina:
+
+  const options = {
+    body: "Chronos, não te esqueças das tuas missões diárias. A disciplina é o caminho para o topo!",
+    icon: "https://cdn-icons-png.flaticon.com/512/4712/4712009.png",
+    vibrate: [100, 50, 100],
+    data: { url: "./" },
+  };
+
+  return self.registration.showNotification("🛡️ Lembrete de Zeus", options);
+}
 // Instala o Service Worker e guarda os arquivos no cache
 self.addEventListener("install", (e) => {
   e.waitUntil(
