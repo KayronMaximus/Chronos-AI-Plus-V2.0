@@ -1,3 +1,18 @@
+:root {
+    /* Cores Neutras (Escuro Profundo) */
+    --bg-main: #05070a;       
+    --bg-card: #0d1117;       
+    --bg-nav: #080a0d;        
+    --text-dim: #667681;      
+    --primary-color: #00d4ff; /* Para compatibilidade com o JS */
+    
+    /* Neons Sutis */
+    --primary-neon: #00d4ff;  
+    --primary-glow: rgba(0, 212, 255, 0.15); 
+    --success-neon: #00ff88;  
+    --gold-neon: #ffb700;     
+    --border-subtle: rgba(255, 255, 255, 0.05);
+}
 * {
   margin: 0;
   padding: 0;
@@ -10,26 +25,23 @@ body {
   display: flex;
   justify-content: center;
   overflow-x: hidden;
-  overscroll-behavior-y: contain; /* Impede o scroll de "elástico" no topo */
-  user-select: none; /* Evita que o usuário fique selecionando textos por acidente como se fosse um site */
+  overscroll-behavior-y: contain;
+  user-select: none;
 }
-
 .app-container {
   width: 100%;
   max-width: 480px;
   min-height: 100vh;
-  background-color: #181818;
+  background-color: #101010;
   position: relative;
   padding-bottom: 80px;
 }
-
 .header-principal {
-  background: linear-gradient(135deg, #1e1e1e 0%, #111 100%);
-  padding: 40px 25px 60px 25px;
+  background: linear-gradient(135deg, #0b0b0b 0%, #262626 100%);
+  padding: 40px 45px 80px 45px;
   border-radius: 0 0 30px 30px;
-  margin-bottom: -30px;
+  margin-bottom: -10px;
 }
-
 .data-layer {
   color: #00d4ff;
   font-size: 0.9rem;
@@ -44,13 +56,22 @@ main {
 }
 
 .card {
-  background-color: #252525;
+  background-color: #202020;
   padding: 20px;
   border-radius: 18px;
   margin-bottom: 15px;
   box-shadow: 0 8px 16px rgba(0, 0, 0, 0.4);
+  transition:
+    transform 0.3s ease,
+    box-shadow 0.3s ease;
 }
-/* --- NOVA BARRA DE NAVEGAÇÃO (ESTILO CYBERPUNK) --- */
+.card:hover {
+  transform: scale(1.02);
+  box-shadow: 0 10px 20px rgba(0, 213, 255, 0.365);
+  cursor: pointer;
+}
+
+/* NAV BUTTONS */
 .bottom-nav {
   position: fixed;
   bottom: 0;
@@ -58,17 +79,15 @@ main {
   transform: translateX(-50%);
   width: 100%;
   max-width: 480px;
-  background-color: #0f0f0f; /* Fundo mais escuro para o Neon brilhar */
+  background-color: #0f0f0f;
   display: flex;
   justify-content: space-around;
   align-items: center;
   padding: 10px 0;
   border-top: 1px solid #333;
   z-index: 100;
-  box-shadow: 0 -5px 20px rgba(0, 0, 0, 0.5); /* Sombra para destacar do resto */
+  box-shadow: 0 -5px 20px rgba(0, 0, 0, 0.5);
 }
-
-/* Estilo dos Botões (Agenda e Carteira) */
 .nav-btn {
   background: none;
   border: none;
@@ -76,43 +95,36 @@ main {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  color: #666; /* Cor cinza quando inativo */
+  color: #666;
   cursor: pointer;
   transition: all 0.3s ease;
   padding: 5px 15px;
   position: relative;
 }
-
-/* O Ícone SVG */
 .nav-icon {
   width: 24px;
   height: 24px;
-  stroke: currentColor; /* Pega a cor do texto/botão */
+  stroke: currentColor;
   stroke-width: 2;
   fill: none;
   margin-bottom: 4px;
   transition: 0.3s;
 }
-
-/* Texto abaixo do ícone */
 .nav-btn span {
   font-size: 0.75rem;
   font-weight: 500;
 }
-
-/* Estado ATIVO (Quando a aba está selecionada) */
 .nav-btn.active {
-  color: #00d4ff; /* Azul Neon */
+  color: #00d4ff;
 }
 .nav-btn.active .nav-icon {
-  filter: drop-shadow(0 0 5px #00d4ff); /* Brilho no ícone */
+  filter: drop-shadow(0 0 5px #00d4ff);
 }
 
-/* --- O REATOR CENTRAL (HOME) --- */
+/* REATOR HOME */
 .home-btn {
-  transform: translateY(-25px); /* Joga o botão pra cima */
+  transform: translateY(-25px);
 }
-
 .neon-reactor {
   width: 55px;
   height: 55px;
@@ -126,8 +138,6 @@ main {
   box-shadow: 0 0 10px rgba(0, 212, 255, 0.2);
   transition: 0.3s;
 }
-
-/* O Núcleo do Reator */
 .core {
   width: 12px;
   height: 12px;
@@ -137,8 +147,6 @@ main {
     0 0 10px #00d4ff,
     0 0 20px #00d4ff;
 }
-
-/* O Anel Giratório (Só aparece quando ativo ou hover) */
 .home-btn.active .neon-reactor::before,
 .neon-reactor:hover::before {
   content: "";
@@ -146,13 +154,11 @@ main {
   width: 100%;
   height: 100%;
   border-radius: 50%;
-  border: 2px solid transparent;
+  border: 3px solid transparent;
   border-top-color: #00d4ff;
   border-right-color: #00d4ff;
-  animation: girarReator 2s linear infinite;
+  animation: girarReator 3s linear infinite;
 }
-
-/* Animação de Rotação */
 @keyframes girarReator {
   from {
     transform: rotate(0deg);
@@ -161,164 +167,8 @@ main {
     transform: rotate(360deg);
   }
 }
-#config-nome-input {
-  width: 100%;
-  margin-bottom: 10px;
-  background-color: rgb(70, 66, 66);
-  padding: 5px;
-  border-radius: 25px;
-}
 
-/* O efeito de hover que você gosta */
-.action-btn:hover {
-  filter: brightness(1.2);
-  transform: translateY(-2px);
-  box-shadow: 0 5px 15px rgba(0, 212, 255, 0.3);
-}
-
-/* Adicione isso no seu CSS para os cards da home também */
-.card {
-  transition:
-    transform 0.3s ease,
-    box-shadow 0.3s ease;
-}
-
-.card:hover {
-  transform: scale(1.02);
-  box-shadow: 0 10px 20px rgba(0, 212, 255, 0.2);
-  cursor: pointer;
-}
-
-.heat-unit {
-  width: 35px;
-  height: 35px;
-  border-radius: 6px;
-  background-color: #333;
-  transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-  cursor: help;
-  position: relative;
-}
-
-/* Quando o dia tem atividade (Missão Cumprida) */
-.heat-active {
-  background-color: #00d4ff;
-  box-shadow: 0 0 10px rgba(0, 212, 255, 0.4);
-}
-
-/* Efeito de Mouse que você pediu */
-.heat-unit:hover {
-  transform: scale(1.2) translateY(-5px);
-  z-index: 10;
-  box-shadow: 0 0 15px #00d4ff;
-}
-
-/* Tooltip simples para mostrar a data ao passar o mouse */
-.heat-unit::after {
-  content: attr(data-date);
-  position: absolute;
-  bottom: 130%;
-  left: 50%;
-  transform: translateX(-50%);
-  background: #000;
-  color: #fff;
-  padding: 4px 8px;
-  font-size: 10px;
-  border-radius: 4px;
-  white-space: nowrap;
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity 0.2s;
-}
-
-.heat-unit:hover::after {
-  opacity: 1;
-}
-
-/* MODAIS - ESTILO DARK PREMIUM */
-.modal-content input,
-.modal-content select {
-  width: 100%;
-  padding: 12px;
-  margin: 8px 0 18px 0;
-  background-color: #1a1a1a !important;
-  border: 1px solid #444 !important;
-  border-radius: 8px;
-  color: white !important;
-  font-size: 16px;
-  outline: none;
-}
-.modal-content input:focus,
-.modal-content select:focus {
-  border-color: #00d4ff !important;
-}
-
-.modal-buttons {
-  display: flex;
-  justify-content: flex-end;
-  gap: 10px;
-  margin-top: 5px;
-}
-.btn-cancelar,
-.btn-confirmar,
-.btn-confirmar-fin {
-  padding: 12px 20px;
-  border-radius: 8px;
-  font-weight: bold;
-  border: none;
-  cursor: pointer;
-  flex-shrink: 0;
-  min-width: 110px;
-}
-.btn-cancelar {
-  background: #333;
-  color: #ccc;
-}
-.btn-confirmar {
-  background: rgba(0, 212, 255, 0.2);
-  color: #00d4ff;
-}
-.btn-confirmar-fin {
-  background: rgba(46, 204, 113, 0.2);
-  color: #2ecc71;
-}
-
-/* TAREFAS E HISTÓRICO */
-.tarefa-item {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 12px 15px !important;
-}
-.tarefa-container-clique {
-  display: flex;
-  align-items: center;
-  gap: 15px;
-  flex: 1;
-  min-width: 0;
-  cursor: pointer;
-}
-.check-area {
-  width: 30px;
-  flex-shrink: 0;
-  font-size: 1.4rem;
-  display: flex;
-  justify-content: center;
-}
-.tarefa-info {
-  display: flex;
-  flex-direction: column;
-  overflow: hidden;
-}
-.tarefa-info strong {
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  overflow: hidden;
-}
-.tarefa-feita {
-  text-decoration: line-through;
-  opacity: 0.5;
-}
-
+/* UI ELEMENTS */
 .action-btn {
   background: #00d4ff;
   color: #000000;
@@ -328,6 +178,13 @@ main {
   width: 100%;
   border: none;
   cursor: pointer;
+  text-transform: uppercase;
+  font-size: 0.85rem;
+  letter-spacing: 1px;
+}
+.action-btn:hover {
+  filter: brightness(1.2);
+  transform: translateY(-2px);
 }
 .ai-btn {
   background: linear-gradient(45deg, #00d4ff, #9b59b6);
@@ -340,6 +197,19 @@ main {
   margin-top: 10px;
   cursor: pointer;
 }
+.link-btn {
+  background: rgba(0, 212, 255, 0.1);
+  border: 1px solid rgba(0, 212, 255, 0.3);
+  padding: 12px;
+  border-radius: 10px;
+  width: 100%;
+  margin-top: 15px;
+  font-weight: bold;
+  color: #00d4ff;
+  cursor: pointer;
+}
+
+/* MODAIS */
 .hidden {
   display: none !important;
 }
@@ -363,450 +233,734 @@ main {
   max-width: 400px;
   border: 1px solid #333;
 }
-.link-btn {
-  background: rgba(0, 212, 255, 0.1);
-  border: 1px solid rgba(0, 212, 255, 0.3);
-  padding: 12px;
-  border-radius: 10px;
+.modal-content input,
+.modal-content select {
   width: 100%;
-  margin-top: 15px;
-  font-weight: bold;
+  padding: 12px;
+  margin: 8px 0 18px 0;
+  background-color: #1a1a1a !important;
+  border: 1px solid #444 !important;
+  border-radius: 8px;
+  color: white !important;
+  font-size: 16px;
+  outline: none;
+}
+.modal-content input:focus {
+  border-color: #00d4ff !important;
+}
+.modal-buttons {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 5px;
+}
+.btn-cancelar {
+  background: #333;
+  color: #ccc;
+  padding: 12px 20px;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+}
+.btn-confirmar {
+  background: rgba(0, 212, 255, 0.2);
   color: #00d4ff;
+  padding: 12px 20px;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  font-weight: bold;
+}
+.btn-confirmar-fin {
+  background: rgba(46, 204, 113, 0.2);
+  color: #2ecc71;
+  padding: 12px 20px;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+/* TAREFAS */
+.tarefa-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 15px !important;
+}
+.tarefa-container-clique {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  flex: 1;
+  min-width: 0;
+  cursor: pointer;
+}
+.check-area {
+  width: 30px;
+  font-size: 1.4rem;
+  display: flex;
+  justify-content: center;
+}
+.tarefa-feita {
+  text-decoration: line-through;
+  opacity: 0.5;
+}
+
+/* CONFIGURAÇÃO */
+#config-nome-input {
+  width: 100%;
+  margin-bottom: 10px;
+  background-color: #0a0a0a;
+  padding: 15px;
+  border-radius: 8px;
+  border: 1px solid #444;
+  color: #00d4ff;
+  font-family: monospace;
+}
+
+/* MODAL TÁTICO */
+.modal-tatica {
+  background: linear-gradient(145deg, #151515, #1e1e1e);
+  border: 1px solid #4285f4;
+  box-shadow: 0 0 20px rgba(66, 133, 244, 0.2);
+  position: relative;
+  overflow: hidden;
+}
+.modal-tatica::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 6px;
+  height: 100%;
+  background: #4285f4;
+  box-shadow: 2px 0 10px rgba(66, 133, 244, 0.5);
+}
+#input-data-hora {
+  color-scheme: dark;
+}
+.btn-confirmar-agenda {
+  background: rgba(66, 133, 244, 0.15);
+  color: #4285f4;
+  padding: 12px 20px;
+  border-radius: 8px;
+  border: 1px solid rgba(66, 133, 244, 0.3);
   cursor: pointer;
 }
 
-canvas {
-  max-width: 100% !important;
+/* =======================================================
+   SPLASH SCREEN: VÓRTICE DE PARTÍCULAS
+   ======================================================= */
+#splash-screen {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: #020202;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+  overflow: hidden;
+  transition:
+    opacity 1s ease,
+    visibility 1s;
 }
-/* --- CONFIGURAÇÕES: ESTILO CYBERPUNK --- */
+.deep-space-bg {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(circle at center, #0a0a1a 0%, #000 70%);
+  opacity: 0.8;
+}
+.particle-system {
+  position: relative;
+  width: 300px;
+  height: 300px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transform: perspective(500px) rotateX(60deg);
+  transform-style: preserve-3d;
+}
+.core-void {
+  position: absolute;
+  width: 60px;
+  height: 60px;
+  background: #000;
+  border-radius: 50%;
+  z-index: 10;
+  box-shadow: 0 0 50px rgba(0, 212, 255, 0.3);
+  animation: pulseCore 2s infinite ease-in-out;
+}
+.particle-ring {
+  position: absolute;
+  border-radius: 50%;
+  border-style: dotted;
+  box-shadow: 0 0 10px rgba(0, 212, 255, 0.2);
+  opacity: 0.7;
+}
+.layer-1 {
+  width: 100px;
+  height: 100px;
+  border-width: 2px;
+  border-color: #00d4ff;
+  animation: spinParticles 2s linear infinite;
+}
+.layer-2 {
+  width: 160px;
+  height: 160px;
+  border-width: 3px;
+  border-color: #8a2be2;
+  border-left-color: transparent;
+  border-right-color: transparent;
+  animation: spinParticles 3s linear infinite reverse;
+}
+.layer-3 {
+  width: 220px;
+  height: 220px;
+  border-width: 2px;
+  border-color: rgba(255, 255, 255, 0.5);
+  border-top-color: transparent;
+  border-bottom-color: transparent;
+  animation: spinParticles 5s linear infinite;
+}
+.layer-4 {
+  width: 280px;
+  height: 280px;
+  border: 1px dashed rgba(0, 212, 255, 0.2);
+  animation: spinParticles 10s linear infinite;
+}
 
-/* 1. O Card Tecnológico */
+.ui-container {
+  margin-top: 50px;
+  z-index: 20;
+  text-align: center;
+}
+.system-title {
+  font-family: "Courier New", monospace;
+  font-size: 2rem;
+  color: #fff;
+  letter-spacing: 5px;
+  text-shadow: 0 0 15px #00d4ff;
+}
+.blink {
+  animation: blink 0.5s infinite;
+  color: #00d4ff;
+}
+.loading-text {
+  font-family: sans-serif;
+  font-size: 0.7rem;
+  color: #555;
+  letter-spacing: 3px;
+  margin-top: 10px;
+}
+
+@keyframes spinParticles {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+@keyframes pulseCore {
+  0%,
+  100% {
+    transform: scale(1);
+    box-shadow: 0 0 50px rgba(0, 212, 255, 0.3);
+  }
+  50% {
+    transform: scale(0.95);
+    box-shadow: 0 0 80px rgba(138, 43, 226, 0.5);
+  }
+}
+@keyframes blink {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0;
+  }
+}
+@keyframes loadLine {
+  0% {
+    transform: translateX(-100%);
+  }
+  50% {
+    transform: translateX(100%);
+  }
+  100% {
+    transform: translateX(100%);
+  }
+}
+.hide-splash {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+/* =========================================================
+   ESTILO: SISTEMA SOLO LEVELING (RPG MASTER)
+   ========================================================= */
+
+/* --- CARD NA HOME --- */
+.system-card {
+  background: linear-gradient(160deg, #0a0f16 0%, #000000 100%);
+  border: 1px solid #1a2f40;
+  border-left: 4px solid #00d4ff;
+  border-radius: 20px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+  padding: 20px;
+  margin-bottom: 20px;
+  position: relative;
+  overflow: hidden;
+  transition: all 0.3s ease;
+}
+.system-card:active {
+  transform: scale(0.97);
+}
+.system-card h3 {
+  color: #fff;
+  font-size: 1.1rem;
+  letter-spacing: 1px;
+  margin-bottom: 5px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.system-text {
+  color: #00d4ff;
+  font-family: "Courier New", monospace;
+  font-size: 0.85rem;
+  margin-bottom: 15px;
+  opacity: 0.9;
+}
+.status-badge {
+  float: right;
+  font-size: 0.65rem;
+  padding: 4px 8px;
+  border-radius: 4px;
+  background: rgba(255, 68, 68, 0.1);
+  color: #ff4444;
+  border: 1px solid rgba(255, 68, 68, 0.3);
+  font-weight: bold;
+  letter-spacing: 1px;
+}
+.status-complete {
+  background: rgba(0, 255, 136, 0.1);
+  color: #00ff88;
+  border-color: rgba(0, 255, 136, 0.3);
+}
+
+.progress-track {
+  width: 100%;
+  height: 6px;
+  background: #1a1a1a;
+  border-radius: 3px;
+  overflow: hidden;
+  position: relative;
+}
+.progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #00d4ff, #0088ff);
+  box-shadow: 0 0 10px rgba(0, 212, 255, 0.5);
+  transition: width 0.6s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+/* --- BADGE DE LEVEL NA HOME --- */
+.lvl-badge-mini {
+  background: #ffb700;
+  color: #000;
+  font-size: 0.7rem;
+  padding: 2px 6px;
+  border-radius: 2px;
+  margin-left: 10px;
+  font-weight: bold;
+  box-shadow: 0 0 5px rgba(255, 183, 0, 0.5);
+  vertical-align: middle;
+}
+
+/* --- JANELA MODAL RPG --- */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.85);
+  backdrop-filter: blur(12px);
+  z-index: 10000;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s;
+}
+.modal-overlay:not(.hidden) {
+  opacity: 1;
+  pointer-events: all;
+}
+
+.system-window {
+  width: 90%;
+  max-width: 420px;
+  background: #080a10;
+  border: 1px solid #00d4ff;
+  box-shadow: 0 0 40px rgba(0, 212, 255, 0.15);
+  padding: 0;
+  border-radius: 2px;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  max-height: 85vh;
+}
+
+/* HEADER RPG COMPLEXO */
+.sys-header-complex {
+  background: linear-gradient(
+    to bottom,
+    rgba(0, 10, 20, 0.8),
+    rgba(0, 0, 0, 0)
+  );
+  padding: 20px 25px 10px 25px;
+  border-bottom: 1px solid rgba(0, 212, 255, 0.1);
+}
+.header-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
+}
+.sys-header-complex h2 {
+  font-family: "Segoe UI", sans-serif;
+  font-weight: 800;
+  font-size: 1.2rem;
+  letter-spacing: 2px;
+  color: #fff;
+  text-shadow: 0 0 10px rgba(0, 212, 255, 0.5);
+}
+.btn-close-sys {
+  background: transparent;
+  border: none;
+  color: #fff;
+  font-size: 1.5rem;
+  opacity: 0.7;
+  cursor: pointer;
+}
+
+/* PAINEL DE STATUS (LEVEL E XP) */
+.player-stats {
+  display: flex;
+  gap: 15px;
+  align-items: center;
+  margin-bottom: 10px;
+}
+.level-box {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border: 1px solid #ffb700;
+  padding: 5px 12px;
+  border-radius: 4px;
+  background: rgba(255, 183, 0, 0.05);
+  min-width: 60px;
+}
+.level-box .label {
+  font-size: 0.6rem;
+  color: #ffb700;
+  letter-spacing: 1px;
+  font-weight: bold;
+}
+.level-box .value-lvl {
+  font-size: 1.5rem;
+  color: #fff;
+  font-weight: 800;
+  text-shadow: 0 0 10px #ffb700;
+  line-height: 1;
+  margin-top: 2px;
+}
+
+.xp-container {
+  flex: 1;
+}
+.xp-info {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.75rem;
+  color: #ccc;
+  margin-bottom: 5px;
+  font-family: "Courier New", monospace;
+}
+.xp-track {
+  width: 100%;
+  height: 8px;
+  background: #222;
+  border-radius: 4px;
+  overflow: hidden;
+  border: 1px solid #333;
+}
+.xp-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #ffb700, #ffea00);
+  box-shadow: 0 0 10px rgba(255, 183, 0, 0.6);
+  transition: width 0.5s ease;
+}
+
+/* CONTEÚDO DA LISTA */
+.sys-content {
+  padding: 25px;
+  overflow-y: auto;
+}
+.quest-title {
+  color: #00d4ff;
+  text-align: left;
+  font-size: 1.8rem;
+  font-weight: 900;
+  line-height: 1;
+  margin-bottom: 5px;
+  text-transform: uppercase;
+}
+.quest-sub {
+  color: #666;
+  text-align: left;
+  font-size: 0.8rem;
+  margin-bottom: 25px;
+  letter-spacing: 1px;
+  font-family: monospace;
+}
+
+/* ITENS DE EXERCÍCIO */
+.ex-item {
+  background: #11161d;
+  border: 1px solid #2a3b4c;
+  border-radius: 8px;
+  padding: 15px;
+  margin-bottom: 15px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.ex-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.ex-name {
+  color: #e0e0e0;
+  font-weight: 600;
+  font-size: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.ex-count {
+  font-family: "Courier New", monospace;
+  color: #00d4ff;
+  font-weight: bold;
+  font-size: 1.1rem;
+}
+.mini-track {
+  width: 100%;
+  height: 4px;
+  background: #000;
+  border-radius: 2px;
+  overflow: hidden;
+}
+.mini-fill {
+  height: 100%;
+  background: #00d4ff;
+  transition: width 0.3s;
+}
+.ex-controls {
+  display: flex;
+  gap: 8px;
+}
+.btn-add {
+  flex: 1;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid #333;
+  color: #aaa;
+  padding: 10px 0;
+  border-radius: 4px;
+  cursor: pointer;
+  font-family: monospace;
+  font-weight: bold;
+  font-size: 0.9rem;
+  transition: all 0.2s;
+}
+.btn-add:active {
+  background: #00d4ff;
+  color: #000;
+  border-color: #00d4ff;
+  transform: scale(0.95);
+}
+
+/* RECOMPENSA */
+.reward-box {
+  margin-top: 10px;
+  border: 1px solid #ffd700;
+  background: linear-gradient(
+    90deg,
+    rgba(255, 215, 0, 0.05),
+    rgba(255, 215, 0, 0.15)
+  );
+  color: #ffd700;
+  text-align: center;
+  padding: 15px;
+  border-radius: 6px;
+  animation: glowGold 2s infinite alternate;
+}
+@keyframes glowGold {
+  from {
+    box-shadow: 0 0 5px rgba(255, 215, 0, 0.2);
+  }
+  to {
+    box-shadow: 0 0 15px rgba(255, 215, 0, 0.5);
+  }
+}
+
+/* Animação LEVEL UP */
+.level-up-anim {
+  animation: levelUpFlash 1s ease-in-out;
+}
+@keyframes levelUpFlash {
+  0% {
+    box-shadow: 0 0 0 rgba(255, 183, 0, 0);
+    border-color: #00d4ff;
+  }
+  50% {
+    box-shadow: 0 0 50px rgba(255, 183, 0, 0.8);
+    border-color: #ffb700;
+    background: rgba(255, 183, 0, 0.1);
+  }
+  100% {
+    box-shadow: 0 0 0 rgba(255, 183, 0, 0);
+    border-color: #00d4ff;
+  }
+}
+/* =========================================================
+   ESTILO: CONFIGURAÇÕES (REMASTERIZADO)
+   ========================================================= */
+
+/* =========================================================
+   ESTILO: CONFIGURAÇÕES (REMASTERIZADO)
+   ========================================================= */
+
+#view-config {
+    padding-bottom: 40px;
+}
+
+#view-config h2 {
+    font-size: 1.5rem;
+    letter-spacing: 2px;
+    color: #fff;
+    text-transform: uppercase;
+    margin-bottom: 25px;
+}
+
+/* Card de Configuração Evoluído */
 #view-config .card {
-    background: linear-gradient(145deg, #1e1e1e, #252525); /* Fundo com profundidade */
-    border: 1px solid #333;
-    border-radius: 12px; /* Cantos um pouco mais retos que o padrão */
+    background: linear-gradient(145deg, #0d1117 0%, #05070a 100%);
+    border: 1px solid var(--border-subtle);
+    border-radius: 16px;
+    padding: 25px;
+    margin-bottom: 20px;
     position: relative;
-    padding-left: 25px; /* Espaço extra para a faixa neon */
     overflow: hidden;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-/* 2. A Faixa de Energia (Lateral Neon) */
+/* Faixa lateral de categoria */
 #view-config .card::before {
     content: '';
     position: absolute;
-    top: 0;
-    left: 0;
-    width: 6px;
-    height: 100%;
-    background: #00d4ff; /* Azul Neon */
-    box-shadow: 2px 0 15px rgba(0, 212, 255, 0.4);
+    top: 0; left: 0;
+    width: 4px; height: 100%;
+    background: var(--primary-neon);
+    box-shadow: 0 0 15px var(--primary-glow);
+    opacity: 0.6;
 }
 
-/* Variação de cor para o Card de Segurança (Oráculo) - Roxo/Rosa */
-#view-config .card:nth-of-type(2)::before {
-    background: #d400ff;
-    box-shadow: 2px 0 15px rgba(212, 0, 255, 0.4);
+/* Cores diferentes por categoria (usando a ordem que você tem) */
+#view-config .card:nth-of-type(2)::before { background: var(--accent-neon); box-shadow: 0 0 15px var(--accent-neon); }
+#view-config .card:nth-of-type(3)::before { background: #4285F4; box-shadow: 0 0 15px rgba(66, 133, 244, 0.4); }
+
+#view-config .card:hover {
+    transform: translateY(-3px);
+    border-color: rgba(0, 212, 255, 0.3);
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.6);
 }
 
-/* 3. Títulos dos Cards */
+/* Títulos e Labels */
 #view-config h3 {
-    font-size: 1.1rem;
+    font-size: 1rem;
     color: #fff;
-    margin-bottom: 4px;
     display: flex;
     align-items: center;
-    letter-spacing: 0.5px;
+    gap: 10px;
+    margin-bottom: 8px;
 }
 
-/* Descrição pequena abaixo do título */
 #view-config p {
-    color: #aaa;
+    color: var(--text-dim);
     font-size: 0.8rem;
-    margin-bottom: 15px;
+    margin-bottom: 18px;
 }
 
-/* 4. Inputs (Campos de Texto) - Visual "Terminal" */
+/* Inputs Estilo Terminal */
 #view-config input.input-dark {
     width: 100%;
-    background-color: #0a0a0a; /* Quase preto */
-    border: 1px solid #444;
-    padding: 15px;
+    background: #000 !important;
+    border: 1px solid #1a222c !important;
+    padding: 14px 16px;
     border-radius: 8px;
-    color: #00d4ff; /* Texto digitado brilha em azul */
-    font-family: 'Consolas', monospace; /* Fonte de código para parecer hacker */
-    font-size: 0.95rem;
+    color: var(--primary-neon) !important;
+    font-family: 'Consolas', monospace;
+    font-size: 0.9rem;
     margin-bottom: 15px;
-    transition: all 0.3s ease;
+    transition: border-color 0.3s;
 }
 
-/* Efeito ao clicar no input */
 #view-config input.input-dark:focus {
-    border-color: #00d4ff;
-    box-shadow: 0 0 10px rgba(0, 212, 255, 0.2);
-    outline: none;
+    border-color: var(--primary-neon) !important;
+    box-shadow: 0 0 10px var(--primary-glow);
 }
 
-/* 5. Botões de Ação Padronizados */
+/* Botões de Ação Dinâmicos */
 #view-config .action-btn {
+    background: rgba(0, 212, 255, 0.05);
+    border: 1px solid var(--primary-neon);
+    color: var(--primary-neon);
+    font-weight: 800;
     text-transform: uppercase;
-    font-size: 0.85rem;
-    letter-spacing: 1px;
-    font-weight: 700;
+    letter-spacing: 2px;
     padding: 14px;
     border-radius: 8px;
-    transition: transform 0.2s, box-shadow 0.2s;
-    /* Gradiente padrão (Azul) */
-    background: linear-gradient(90deg, #00d4ff, #007ea7); 
-    box-shadow: 0 5px 15px rgba(0, 212, 255, 0.2);
-}
-
-/* Efeito de clique no botão */
-#view-config .action-btn:active {
-    transform: scale(0.98);
-}
-
-/* Botão Específico do Google (Azul Google) */
-#view-config button[onclick="iniciarConexaoGoogle()"] {
-    background: linear-gradient(90deg, #4285F4, #3367D6);
-    box-shadow: 0 5px 15px rgba(66, 133, 244, 0.3);
-}
-
-/* Botão de Voltar (Seta) */
-#view-config button[onclick="mostrarSecao('home')"] {
-    background: rgba(255, 255, 255, 0.1) !important;
-    border-radius: 50%;
-    width: 40px;
-    height: 40px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: 0.3s;
-}
-#view-config button[onclick="mostrarSecao('home')"]:hover {
-    background: rgba(0, 212, 255, 0.2) !important;
-    color: #fff !important;
-}
-/* --- MODAL TÁTICO DE AGENDAMENTO --- */
-
-/* O Card do Modal com brilho Azul (Google Agenda) */
-.modal-tatica {
-    background: linear-gradient(145deg, #151515, #1e1e1e);
-    border: 1px solid #4285F4; /* Azul Google */
-    box-shadow: 0 0 20px rgba(66, 133, 244, 0.2);
-    position: relative;
-    overflow: hidden;
-}
-
-/* Faixa Neon Lateral Azul */
-.modal-tatica::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 6px;
-    height: 100%;
-    background: #4285F4;
-    box-shadow: 2px 0 10px rgba(66, 133, 244, 0.5);
-}
-
-/* Título e Texto */
-.modal-tatica h3 {
-    color: #4285F4;
-    margin-bottom: 5px;
-    margin-left: 10px; /* Espaço por causa da faixa */
-}
-.modal-tatica #titulo-agendamento {
-    color: #ccc;
-    font-style: italic;
-    font-size: 0.9rem;
-    margin-bottom: 20px;
-    margin-left: 10px;
-    opacity: 0.8;
-}
-
-/* O INPUT DE DATA (O Segredo do Dark Mode) */
-#input-data-hora {
     width: 100%;
-    padding: 15px;
-    background: #0a0a0a;
-    border: 1px solid #333;
-    border-radius: 8px;
-    color: #fff;
-    font-size: 1.1rem;
-    outline: none;
-    margin-bottom: 25px;
-    
-    /* MÁGICA: Força o calendário do celular a ser escuro */
-    color-scheme: dark; 
-}
-
-#input-data-hora:focus {
-    border-color: #4285F4;
-    box-shadow: 0 0 10px rgba(66, 133, 244, 0.2);
-}
-
-/* Botão de Confirmar Especial */
-.btn-confirmar-agenda {
-    padding: 12px 20px;
-    border-radius: 8px;
-    font-weight: bold;
-    border: none;
     cursor: pointer;
-    background: rgba(66, 133, 244, 0.15);
+    transition: all 0.3s;
+}
+
+#view-config .action-btn:hover {
+    background: var(--primary-neon);
+    color: #000000;
+    box-shadow: 0 0 20px var(--primary-glow);
+}
+
+/* Botão Google Calendar Especial */
+#view-config button[onclick="iniciarConexaoGoogle()"] {
+    background: rgba(66, 133, 244, 0.1);
+    border-color: #4285F4;
     color: #4285F4;
-    border: 1px solid rgba(66, 133, 244, 0.3);
-    transition: 0.3s;
 }
 
-.btn-confirmar-agenda:active {
-    background: rgba(66, 133, 244, 0.4);
-    transform: scale(0.95);
-}
-/* =======================================================
-   ESTILO DO SPLASH SCREEN (TÉCNICA SANDUÍCHE 3D)
-   ======================================================= */
-#splash-screen {
-    position: fixed;
-    top: 0; left: 0;
-    width: 100vw; height: 100vh;
-    background-color: #050505;
-    z-index: 9999; /* Acima de tudo */
-    display: flex; flex-direction: column;
-    align-items: center; justify-content: center;
-    overflow: hidden;
-    transition: opacity 1.5s ease-out, visibility 1.5s;
-}
-
-/* Fundo Estrelado Simples */
-.space-background {
-    position: absolute;
-    width: 100%; height: 100%;
-    background: radial-gradient(white 1px, transparent 1px);
-    background-size: 40px 40px;
-    opacity: 0.1;
-    animation: moveSpace 60s linear infinite;
-}
-
-/* O Container que segura o Buraco Negro */
-.black-hole-box {
-    position: relative;
-    width: 300px; height: 300px;
-    display: flex; justify-content: center; align-items: center;
-    transform: scale(1.2); /* Tamanho geral */
-}
-
-/* --- CAMADA 2: A ESFERA PRETA (MEIO) --- */
-.event-horizon {
-    position: relative;
-    width: 80px; height: 80px;
-    background: #000000;
-    border-radius: 50%;
-    z-index: 10; /* Fica ENTRE os discos */
-    box-shadow: 0 0 40px rgba(0, 0, 0, 1); /* Sombra intensa */
-}
-
-/* O anel de luz fina na borda da esfera */
-.photon-ring {
-    position: absolute;
-    top: 50%; left: 50%;
-    transform: translate(-50%, -50%);
-    width: 105%; height: 105%;
-    border-radius: 50%;
-    border: 1px solid rgba(255, 255, 255, 0.8);
-    box-shadow: 0 0 10px #9939ff;
-    filter: blur(1px);
-}
-
-/* --- CONFIGURAÇÃO GERAL DOS DISCOS --- */
-/* =========================================
-   SPLASH SCREEN: VÓRTICE DE PARTÍCULAS
-   ========================================= */
-#splash-screen {
-    position: fixed;
-    top: 0; left: 0;
-    width: 100vw; height: 100vh;
-    background: #020202; /* Quase preto absoluto */
-    display: flex; flex-direction: column;
-    justify-content: center; align-items: center;
-    z-index: 9999;
-    overflow: hidden;
-    transition: opacity 1s ease, visibility 1s;
-}
-
-/* Fundo com leve pulsação */
-.deep-space-bg {
-    position: absolute;
-    width: 100%; height: 100%;
-    background: radial-gradient(circle at center, #0a0a1a 0%, #000 70%);
-    opacity: 0.8;
-}
-
-.particle-system {
-    position: relative;
-    width: 300px; height: 300px;
-    display: flex; justify-content: center; align-items: center;
-    /* Inclinação leve para dar profundidade 3D */
-    transform: perspective(500px) rotateX(60deg);
-    transform-style: preserve-3d;
-}
-
-/* --- O NÚCLEO (O Vazio) --- */
-.core-void {
-    position: absolute;
-    width: 60px; height: 60px;
-    background: #000;
-    border-radius: 50%;
-    z-index: 10;
-    box-shadow: 0 0 50px rgba(0, 212, 255, 0.3); /* Brilho interno fraco */
-    animation: pulseCore 2s infinite ease-in-out;
-}
-
-/* --- PARTÍCULAS (ANÉIS PONTILHADOS) --- */
-.particle-ring {
-    position: absolute;
-    border-radius: 50%;
-    border-style: dotted; /* ISSO CRIA AS PARTÍCULAS */
-    box-shadow: 0 0 10px rgba(0, 212, 255, 0.2);
-    opacity: 0.7;
-}
-
-/* Camada 1: Partículas Finas Ciano (Rápido) */
-.layer-1 {
-    width: 100px; height: 100px;
-    border-width: 2px;
-    border-color: #00d4ff;
-    animation: spinParticles 2s linear infinite;
-}
-
-/* Camada 2: Partículas Roxas (Médio) */
-.layer-2 {
-    width: 160px; height: 160px;
-    border-width: 3px;
-    border-color: #8a2be2; /* Roxo */
-    border-left-color: transparent; /* Cria falhas no anel */
-    border-right-color: transparent;
-    animation: spinParticles 3s linear infinite reverse; /* Gira ao contrário */
-}
-
-/* Camada 3: Partículas Brancas Esparsas (Lento) */
-.layer-3 {
-    width: 220px; height: 220px;
-    border-width: 2px;
-    border-color: rgba(255,255,255,0.5);
-    border-top-color: transparent;
-    border-bottom-color: transparent;
-    animation: spinParticles 5s linear infinite;
-}
-
-/* Camada 4: A Nuvem Externa (Orbitais) */
-.layer-4 {
-    width: 280px; height: 280px;
-    border: 1px dashed rgba(0, 212, 255, 0.2);
-    animation: spinParticles 10s linear infinite;
-}
-
-/* --- UI --- */
-.ui-container {
-    margin-top: 50px; /* Compensa a rotação 3D */
-    z-index: 20;
-    text-align: center;
-}
-
-.system-title {
-    font-family: 'Courier New', monospace;
-    font-size: 2rem;
+#view-config button[onclick="iniciarConexaoGoogle()"]:hover {
+    background: #4285F4;
     color: #fff;
-    letter-spacing: 5px;
-    text-shadow: 0 0 15px #00d4ff;
-}
-
-.blink { animation: blink 0.5s infinite; color: #00d4ff; }
-.loading-text { font-family: sans-serif; font-size: 0.7rem; color: #555; letter-spacing: 3px; margin-top: 10px; }
-
-/* --- ANIMAÇÕES --- */
-@keyframes spinParticles {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
-}
-
-@keyframes pulseCore {
-    0%, 100% { transform: scale(1); box-shadow: 0 0 50px rgba(0, 212, 255, 0.3); }
-    50% { transform: scale(0.95); box-shadow: 0 0 80px rgba(138, 43, 226, 0.5); }
-}
-
-@keyframes jetPulse {
-    0% { opacity: 0.6; height: 190px; }
-    100% { opacity: 1; height: 210px; }
-}
-
-@keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
-
-/* CLASSE PARA SUMIR */
-.hide-splash {
-    opacity: 0; visibility: hidden; pointer-events: none;
-}
-
-/* --- UI E TEXTOS --- */
-.splash-ui {
-    margin-top: 80px;
-    text-align: center;
-    z-index: 30;
-    position: relative;
-}
-
-.splash-title {
-    font-family: 'Segoe UI', sans-serif;
-    font-size: 2rem;
-    color: #fff;
-    letter-spacing: 4px;
-    text-shadow: 0 0 10px #00d4ff;
-}
-
-.splash-title .highlight {
-    color: #00d4ff;
-    font-weight: 300;
-}
-
-.loading-line {
-    width: 150px; height: 2px;
-    background: rgba(255,255,255,0.1);
-    margin: 15px auto;
-    position: relative; overflow: hidden;
-}
-
-.loading-line::after {
-    content: '';
-    position: absolute; top: 0; left: 0;
-    width: 100%; height: 100%;
-    background: #00d4ff;
-    transform: translateX(-100%);
-    animation: loadLine 2.5s infinite ease-in-out;
-}
-
-.splash-status {
-    font-family: monospace;
-    font-size: 0.8rem;
-    color: #666;
-    animation: blink 1.5s infinite;
-}
-
-/* --- ANIMAÇÕES --- */
-@keyframes spinHole {
-    0% { transform: rotateX(75deg) rotate(0deg); }
-    100% { transform: rotateX(75deg) rotate(360deg); }
-}
-@keyframes loadLine {
-    0% { transform: translateX(-100%); }
-    50% { transform: translateX(100%); }
-    100% { transform: translateX(100%); }
-}
-@keyframes blink { 50% { opacity: 0.5; } }
-@keyframes moveSpace { from { background-position: 0 0; } to { background-position: 500px 500px; } }
-
-/* CLASSE PARA SUMIR */
-.hide-splash {
-    opacity: 0;
-    visibility: hidden;
-    pointer-events: none; /* Garante que dá pra clicar no site depois */
 }

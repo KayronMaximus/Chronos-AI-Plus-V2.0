@@ -18,7 +18,6 @@
 <body>
     <div id="splash-screen">
         <div class="deep-space-bg"></div>
-
         <div class="particle-system">
             <div class="core-void"></div>
             <div class="particle-ring layer-1"></div>
@@ -26,12 +25,12 @@
             <div class="particle-ring layer-3"></div>
             <div class="particle-ring layer-4"></div>
         </div>
-
         <div class="ui-container">
             <h1 class="system-title" id="titulo-ia-splash">CHRONOS <span class="blink">AI</span></h1>
             <p class="loading-text">SINCRONIZANDO O SISTEMA...</p>
         </div>
     </div>
+
     <div class="app-container">
         <header class="header-principal" style="display: flex; justify-content: space-between; align-items: start;">
             <div>
@@ -68,6 +67,20 @@
                     </div>
                     <div id="lista-resumo-home"></div>
                     <button class="link-btn" onclick="mostrarSecao('agenda')">Ver Agenda Completa →</button>
+                </div>
+
+                <div class="card-dashboard system-card" onclick="abrirSistema()">
+                    <div class="card-header">
+                        <h3>⚡ SISTEMA <span class="lvl-badge-mini" id="home-lvl">LVL 1</span></h3>
+                        <span id="status-quest-mini" class="status-badge">PENDENTE</span>
+                    </div>
+                    <div class="card-body">
+                        <p class="system-text">Daily Quest: <strong>Player Growth</strong></p>
+                        <div class="progress-track">
+                            <div class="progress-fill" id="barra-progresso-home" style="width: 0%"></div>
+                        </div>
+                        <p class="small-text">Complete para ganhar XP e Status.</p>
+                    </div>
                 </div>
             </section>
 
@@ -224,6 +237,47 @@
             <div class="modal-buttons">
                 <button onclick="fecharModalAgendamento()" class="btn-cancelar">Cancelar</button>
                 <button onclick="confirmarAgendamento()" class="btn-confirmar-agenda">Confirmar</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="modal-sistema" class="modal-overlay hidden">
+        <div class="system-window">
+            <div class="sys-header-complex">
+                <div class="header-top">
+                    <h2 class="blink-anim">PLAYER STATUS</h2>
+                    <button onclick="fecharSistema()" class="btn-close-sys">✖</button>
+                </div>
+
+                <div class="player-stats">
+                    <div class="level-box">
+                        <span class="label">LEVEL</span>
+                        <span class="value-lvl" id="display-lvl">1</span>
+                    </div>
+                    <div class="xp-container">
+                        <div class="xp-info">
+                            <span>EXP</span>
+                            <span id="display-xp">0 / 100</span>
+                        </div>
+                        <div class="xp-track">
+                            <div class="xp-fill" id="bar-xp" style="width: 0%"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="sys-content">
+                <h1 class="quest-title">PREPARAÇÃO FÍSICA</h1>
+                <p class="quest-sub">Objetivos Diários do Jogador</p>
+                <div class="separator-line"></div>
+
+                <div id="lista-exercicios">
+                </div>
+
+                <div id="msg-recompensa" class="reward-box hidden">
+                    <p>⚠️ QUEST COMPLETA</p>
+                    <span>Status Recuperado</span>
+                </div>
             </div>
         </div>
     </div>
